@@ -28,7 +28,7 @@ _더 많은 예제와 사용법은 [Wiki][wiki]를 참고하세요._
 
 ## 정보
 
-윤종원 – [@블로그 주소](https://velog.io/@jeffyoun) – youncookiexpire@kakao.com
+윤종원 – [블로그](https://velog.io/@jeffyoun) – youncookiexpire@kakao.com
 
 MIT 라이센스를 준수하며 ``LICENSE``에서 자세한 정보를 확인할 수 있습니다
 
@@ -38,4 +38,4 @@ MIT 라이센스를 준수하며 ``LICENSE``에서 자세한 정보를 확인할
 [npm-downloads]: https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
-[wiki]: https://github.com/yourname/yourproject/wiki
+[wiki]: https://korecm.github.io/SportsHistory/
