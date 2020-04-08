@@ -14,7 +14,49 @@
 
 ## 사용 예제
 
+```javascript
+import { SportsHistory } from "sports-history";
 
+let sh = new SportsHistory();
+
+sh.worldSoccer
+  .getHistory("epl", new Date("2020/1/11"))
+  .then((data) => console.log(data));
+
+sh.worldBaseball
+  .getHistory("mlb", new Date("2020/05/16"))
+  .then((data) => console.log(data));
+
+sh.eSports
+  .getHistory("starcraft2", new Date("2020/04/11"))
+  .then((data) => console.log(data));
+
+sh.koreaBaseball
+  .getHistory("kbo", new Date("2020/04/22"))
+  .then((data) => console.log(data));
+
+sh.worldBasketball
+  .getHistory("nba", new Date("2020/03/09"))
+  .then((data) => console.log(data));
+/*
+[ { homeTeamName: 'LG',
+    awayTeamName: '삼성',
+    homeTeamScore: '0',
+    awayTeamScore: '0',
+    gameDate: '2020-04-22',
+    state: '18:30',
+    title: '',
+    stadium: '잠실' },
+  { homeTeamName: 'SK',
+    awayTeamName: '두산',
+    homeTeamScore: '0',
+    awayTeamScore: '0',
+    gameDate: '2020-04-22',
+    state: '18:30',
+    title: '',
+    stadium: '문학' },]
+*/
+```
 _더 많은 예제와 사용법은 [Wiki][wiki]를 참고하세요._
 
 ## 개발 환경 설정
