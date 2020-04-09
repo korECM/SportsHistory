@@ -157,4 +157,5 @@ dist/*
 
 *.json
 !package.json
+!tsconfig.json
 jsdoc.conf
