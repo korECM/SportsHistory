@@ -6,7 +6,6 @@
 ![Travis (.org)](https://img.shields.io/travis/korECM/SportsHistory?color=blue&style=flat-square)
 [![GitHub stars](https://img.shields.io/github/stars/korECM/SportsHistory?color=yellow&style=flat-square)](https://github.com/korECM/SportsHistory/stargazers)
 [![GitHub license](https://img.shields.io/github/license/korECM/SportsHistory?color=blue&style=flat-square)](https://github.com/korECM/SportsHistory/blob/master/LICENSE)
-[![Downloads Stats][npm-downloads]][npm-url]
 
 ## 지원하는 종목
 * 국내 야구
