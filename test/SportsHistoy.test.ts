@@ -4,6 +4,7 @@ let sh: SportsHistory;
 
 let testData: any[];
 beforeEach(() => {
+  sh = new SportsHistory();
   testData = [
     sh.eSports,
     sh.koreaBaseball,
@@ -13,8 +14,6 @@ beforeEach(() => {
     sh.worldBasketball,
     sh.worldSoccer,
   ];
-
-  sh = new SportsHistory();
 });
 
 describe("SportsHistory 클래스의 상속을 받는 아이들은", () => {
