@@ -1,0 +1,12 @@
+docs/
+Model/
+node_modules/
+Service/
+test/
+.gitignore
+.travis.yml
+jsdoc.conf
+package-lock.json
+tsconfig.json
+yarn.lockyarn-error.log
+README.md

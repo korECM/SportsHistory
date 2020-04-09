@@ -1,8 +1,8 @@
 {
   "name": "sports-history",
   "version": "0.0.1",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/Service/SportsHistory.js",
+  "types": "dist/Service/SportsHistory.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "jest",
