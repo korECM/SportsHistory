@@ -1,8 +1,11 @@
 # SportsHistory
 > 해당 날짜의 여러 경기 결과를 불러오는 Node.JS Module
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
+![npm](https://img.shields.io/npm/v/sports-history?color=brightgreen&style=flat-square)
+![npm bundle size](https://img.shields.io/bundlephobia/min/sports-history?style=flat-square)
+![Travis (.org)](https://img.shields.io/travis/korECM/SportsHistory?color=blue&style=flat-square)
+[![GitHub stars](https://img.shields.io/github/stars/korECM/SportsHistory?color=yellow&style=flat-square)](https://github.com/korECM/SportsHistory/stargazers)
+[![GitHub license](https://img.shields.io/github/license/korECM/SportsHistory?color=blue&style=flat-square)](https://github.com/korECM/SportsHistory/blob/master/LICENSE)
 [![Downloads Stats][npm-downloads]][npm-url]
 
 ## 지원하는 종목
