@@ -1,6 +1,7 @@
 {
   "name": "sports-history",
-  "version": "0.0.2",
+  "version": "0.0.3",
+  "description": "A node.js module that calls up the match results for that date",
   "main": "dist/Service/SportsHistory.js",
   "types": "dist/Service/SportsHistory.d.ts",
   "scripts": {

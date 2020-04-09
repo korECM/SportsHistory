@@ -1,5 +1,5 @@
 # SportsHistory
-> 해당 날짜의 여러 경기 결과를 불러오는 Node.JS Module
+> 해당 날짜의 경기 결과를 불러오는 Node.JS Module
 
 ![npm](https://img.shields.io/npm/v/sports-history?color=brightgreen&style=flat-square)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/sports-history?style=flat-square)
@@ -101,7 +101,8 @@ _더 많은 예제와 사용법은 [Docs][wiki]를 참고하세요._
 
 
 ## 업데이트 내역
-
+* 0.0.3
+  * NPM Module Description 추가 및 한글 설명 문구 수정
 * 0.0.2
   * 테스트 에러나던 버그 수정
 * 0.0.1
