@@ -20,7 +20,7 @@ class WorldBaseball extends SportsHistoryAbstract {
    * 주어진 날에 열린 해당 리그 경기를 가져온다
    * @param {WorldBaseballLeague} leagueType 찾고자 하는 리그
    * @param {Date} date 경기를 한 날짜
-   * @returns {Promise} 경기 결과를 배열 형태로 반환하는 Promise
+   * @returns {Promise<Information>} 경기 결과를 배열 형태로 반환하는 Promise
    * @example
    * const sh = new SportsHistory();
    * let data = await sh.worldBaseball.getHistory("mlb", new Date("2020/02/20"));

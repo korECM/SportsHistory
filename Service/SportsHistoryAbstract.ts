@@ -94,8 +94,8 @@ class SportsHistoryAbstract {
         awayTeamScore: data.awayTeamScore,
         gameDate: data.gameStartDate,
         state: data.state,
-        title: data.title,
-        stadium: data.stadium,
+        title: data.title || "",
+        stadium: data.stadium || "",
       });
     });
     return Data;
