@@ -1,4 +1,4 @@
-import { SportsHistory } from "../Service";
+import SportsHistory from "../Service/SportsHistory";
 
 let sh: SportsHistory;
 

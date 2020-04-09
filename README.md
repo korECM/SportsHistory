@@ -44,7 +44,7 @@
 ## 사용 예제
 
 ```javascript
-import { SportsHistory } from "sports-history";
+import SportsHistory from "sports-history";
 
 let sh = new SportsHistory();
 

@@ -93,4 +93,4 @@ class SportsHistory {
   }
 }
 
-export { SportsHistory };
+export default SportsHistory;
