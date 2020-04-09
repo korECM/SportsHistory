@@ -39,7 +39,13 @@
 
 
 ## 설치 방법
-
+```sh
+npm install sports-history
+```
+or
+```sh
+yarn add sports-history
+```
 
 ## 사용 예제
 
@@ -86,7 +92,7 @@ sh.worldBasketball
     stadium: '문학' },]
 */
 ```
-_더 많은 예제와 사용법은 [Wiki][wiki]를 참고하세요._
+_더 많은 예제와 사용법은 [Docs][wiki]를 참고하세요._
 
 ## 개발 환경 설정
 
@@ -95,7 +101,7 @@ _더 많은 예제와 사용법은 [Wiki][wiki]를 참고하세요._
 ## 업데이트 내역
 
 * 0.0.1
-    * 작업 진행 중
+    * 초기 버전 배포
 
 ## 정보
 
