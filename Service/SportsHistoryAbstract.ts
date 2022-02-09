@@ -86,6 +86,8 @@ class SportsHistoryAbstract {
 
   protected parseData(rawData: any[]) {
     let Data: any[] = [];
+    // https://sports.news.naver.com/wfootball/schedule/scoreboard.nhn?date=20220209&category=epl
+    // https://apis.naver.com/nng_main/esports/v1/schedule/month?month=2022-02&topLeagueId=lck&relay=false
     rawData.map((data: any) => {
       Data.push({
         homeTeamName: data.homeTeamName,
@@ -97,7 +99,18 @@ class SportsHistoryAbstract {
         title: data.title || "",
         stadium: data.stadium || "",
       });
+      // Data.push({
+      //   homeTeamName: data.homeTeam.name,
+      //   awayTeamName: data.awayTeam.name,
+      //   homeTeamScore: data.homeScore,
+      //   awayTeamScore: data.awayScore,
+      //   gameDate: data.gameStartDate,
+      //   state: data.matchStatus, // "RESULT" , "BEFORE"
+      //   title: data.title || "",
+      //   stadium: data.stadium || "",
+      // });
     });
+    console.log("DATA: ", Data);
     return Data;
   }
 
