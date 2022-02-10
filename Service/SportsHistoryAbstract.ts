@@ -110,7 +110,6 @@ class SportsHistoryAbstract {
       //   stadium: data.stadium || "",
       // });
     });
-    console.log("DATA: ", Data);
     return Data;
   }
 
@@ -147,6 +146,7 @@ class SportsHistoryAbstract {
       await request(options, (err: any, response: any) => {
         data = JSON.parse(response.body).scoreboardList;
       });
+
       return data || [];
     } catch (error) {
       throw error;

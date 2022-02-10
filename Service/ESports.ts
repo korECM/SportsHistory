@@ -1,6 +1,6 @@
 import { SportsHistoryAbstract } from "./SportsHistoryAbstract";
 import { ESportsLeague, ESportsLeagueArray } from "../Model";
-import request from "request";
+import request from "request-promise";
 
 /**
  * E-Sports 정보를 불러오는 클래스
@@ -14,9 +14,35 @@ class ESports extends SportsHistoryAbstract {
    * @description
    * 리그 이름 | 값
    *------------- | -------------
-   * 리그오브레전드  | lol
-   * 스타크래프트2 | starcraft2
-   * 오버워치 | overwatch
+  * LCK |  lck
+  * LCK CL |  lck_cl
+  * BSC |  bsc
+  * PWS |  pws
+  * GSL |  gsl
+  * LCK AS |  lck_as
+  * LPL |  lpl
+  * LEC |  lec
+  * LCS |  lcs
+  * 롤드컵 |  world_championship
+  * MSI |  msi
+  * MSC |  msc
+  * LOL 올스타 |  lol_allstar
+  * 케스파컵 |  kespacup
+  * CK |ck
+  * Rift Rivals |  riftrivals
+  * PCS |  pubg_pcs
+  * PGC |  pgc
+  * PKC |  pkc
+  * PKL |  pkl
+  * BWS |  bws
+  * PMPS |  pmps
+  * VCT 챌린저스 |  vck
+  * VCT |  vct
+  * WCK |  wck
+  * 호라이즌 컵 |  whc
+  * OWL |  owl
+  * OSL |  osl_futures
+
    */
 
   /**
@@ -40,7 +66,36 @@ class ESports extends SportsHistoryAbstract {
       throw error;
     }
   }
+  protected parseData(rawData: any[]) {
+    const matchTimeFor = (startDate: number): string => {
+      return new Date(startDate).toString().substring(16, 21);
+    };
+    const matchStatusFor = (aMatch: any): string => {
+      return aMatch?.matchStatus === "RESULT"
+        ? "종료"
+        : matchTimeFor(aMatch.startDate);
+    };
+    let Data: any[] = [];
+    rawData.map((data: any) => {
+      Data.push({
+        homeTeamName: data.homeTeam.name,
+        awayTeamName: data.awayTeam.name,
+        homeTeamScore: data.homeScore,
+        awayTeamScore: data.awayScore,
+        gameDate: this.splitDateByHyphenFor(data.startDate),
+        state: matchStatusFor(data),
+        title: data.title || "",
+        stadium: data.stadium || "",
+      });
+    });
+    return Data;
+  }
 
+  protected splitDateByHyphenFor(startDate: number): string {
+    return this.splitDateByHyphen(
+      this.getDateStringFromDate(new Date(startDate))
+    );
+  }
   protected async callAPI(league: any, date: string) {
     let options = {
       method: "GET",
@@ -53,45 +108,40 @@ class ESports extends SportsHistoryAbstract {
     };
     try {
       let data: object[] | null = null;
-
       await request(options, (err: any, response: any) => {
-        data = JSON.parse(response.body).content.filter((aMatch: any) => {
-          console.log(response.body);
-          return this.isEqualDate(aMatch.startDate, date);
-        });
+        data = this.todayMatchFor(date, JSON.parse(response.body).content);
       });
       return data || [];
     } catch (error) {
       throw error;
     }
   }
-
-  private isEqualDate(startDate: number, date: string): boolean {
+  protected todayMatchFor(
+    date: string,
+    matchesInMonth: object[] | null
+  ): object[] {
+    if (matchesInMonth === null) {
+      throw new Error("Array is empty");
+    }
+    return matchesInMonth.filter((aMatch: any): boolean => {
+      return this.isEqualDate(aMatch.startDate, date);
+    });
+  }
+  protected isEqualDate(startDate: number, date: string): boolean {
     return this.getDateStringFromDate(new Date(startDate)) === date;
   }
-
-  // protected getTimeInDateStr(date: string): number {
-  //   return new Date(this.splitDateByHyphen(date)).getTime();
-  // }
-
   protected makeLink(league: ESportsLeague, date: string): string {
-    // return `https://sports.news.naver.com/esports/schedule/scoreboard.nhn?year=2020&month=05&category=${league}&date=${date}`;
     return `https://apis.naver.com/nng_main/esports/v1/schedule/month?month=${this.makeDateToYYYYMM(
       this.splitDateByHyphen(date)
     )}&topLeagueId=${league}&relay=false`;
   }
-  //https://apis.naver.com/nng_main/esports/v1/schedule/month?month=2022-01&topLeagueId=lck&relay=true
-  //https://apis.naver.com/nng_main/esports/v1/schedule/month?month=2022-02&topLeagueId=lck&relay=true
-  //https://sports.news.naver.com/wfootball/schedule/scoreboard.nhn?date=20220211&year=2015&month=02&category=epl
-  // 각각 es / es / epl 주소
-
   protected splitDateByHyphen(date: string): string {
     return (
       date.substring(0, 4) +
       "-" +
       date.substring(4, 6) +
       "-" +
-      date.substring(7, 9)
+      date.substring(6, 8)
     );
   }
   protected makeDateToYYYYMM(date: string): string {
