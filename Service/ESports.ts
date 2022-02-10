@@ -53,9 +53,12 @@ class ESports extends SportsHistoryAbstract {
     };
     try {
       let data: object[] | null = null;
-      // throw new Error("ESPORT CASE");
+
       await request(options, (err: any, response: any) => {
-        data = JSON.parse(response.body).scoreboardList;
+        data = JSON.parse(response.body).content.filter((aMatch: any) => {
+          console.log(response.body);
+          return this.isEqualDate(aMatch.startDate, date);
+        });
       });
       return data || [];
     } catch (error) {
@@ -63,17 +66,36 @@ class ESports extends SportsHistoryAbstract {
     }
   }
 
+  private isEqualDate(startDate: number, date: string): boolean {
+    return this.getDateStringFromDate(new Date(startDate)) === date;
+  }
+
+  // protected getTimeInDateStr(date: string): number {
+  //   return new Date(this.splitDateByHyphen(date)).getTime();
+  // }
+
   protected makeLink(league: ESportsLeague, date: string): string {
     // return `https://sports.news.naver.com/esports/schedule/scoreboard.nhn?year=2020&month=05&category=${league}&date=${date}`;
-    return `https://apis.naver.com/nng_main/esports/v1/schedule/month?month=${this.dateStrToYYYYMM(
-      date
+    return `https://apis.naver.com/nng_main/esports/v1/schedule/month?month=${this.makeDateToYYYYMM(
+      this.splitDateByHyphen(date)
     )}&topLeagueId=${league}&relay=false`;
   }
   //https://apis.naver.com/nng_main/esports/v1/schedule/month?month=2022-01&topLeagueId=lck&relay=true
   //https://apis.naver.com/nng_main/esports/v1/schedule/month?month=2022-02&topLeagueId=lck&relay=true
   //https://sports.news.naver.com/wfootball/schedule/scoreboard.nhn?date=20220211&year=2015&month=02&category=epl
-  protected dateStrToYYYYMM(date: string): string {
-    return date.substring(0, 4) + "-" + date.substring(4, 2);
+  // 각각 es / es / epl 주소
+
+  protected splitDateByHyphen(date: string): string {
+    return (
+      date.substring(0, 4) +
+      "-" +
+      date.substring(4, 6) +
+      "-" +
+      date.substring(7, 9)
+    );
+  }
+  protected makeDateToYYYYMM(date: string): string {
+    return date.substring(0, 7);
   }
 }
 
