@@ -37,6 +37,34 @@
   - EFL컵
   - 코파델레이
 - E-Sports
+  - LCK
+  - LCK CL
+  - BSC
+  - PWS
+  - GSL
+  - LCK AS
+  - LPL
+  - LEC
+  - LCS
+  - 롤드컵
+  - MSI
+  - MSC
+  - LOL 올스타
+  - 케스파컵
+  - CK
+  - Rift Rivals
+  - PCS
+  - PGC
+  - PKC
+  - PKL
+  - BWS
+  - PMPS
+  - VCT 챌린저스
+  - VCT
+  - WCK
+  - 호라이즌 컵
+  - OWL
+  - OSL
   - 리그오브레전드
   - 스타크래프트 2
   - 오버워치
