@@ -71,7 +71,7 @@ class ESports extends SportsHistoryAbstract {
       return new Date(startDate).toString().substring(16, 21);
     };
     const matchStatusFor = (aMatch: any): string => {
-      return aMatch?.matchStatus === "RESULT"
+      return aMatch?.matchStatus === "RESULT" // "RESULT" or "BEFORE"
         ? "종료"
         : matchTimeFor(aMatch.startDate);
     };
