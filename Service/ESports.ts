@@ -78,8 +78,8 @@ class ESports extends SportsHistoryAbstract {
     let Data: any[] = [];
     rawData.map((data: any) => {
       Data.push({
-        homeTeamName: data.homeTeam.name,
-        awayTeamName: data.awayTeam.name,
+        homeTeamName: data.homeTeam?.name ?? "",
+        awayTeamName: data.awayTeam?.name ?? "",
         homeTeamScore: data.homeScore,
         awayTeamScore: data.awayScore,
         gameDate: this.splitDateByHyphenFor(data.startDate),
@@ -91,12 +91,18 @@ class ESports extends SportsHistoryAbstract {
     return Data;
   }
 
-  protected splitDateByHyphenFor(startDate: number): string {
-    return this.splitDateByHyphen(
-      this.getDateStringFromDate(new Date(startDate))
-    );
-  }
   protected async callAPI(league: any, date: string) {
+    const todayMatchFor = (
+      date: string,
+      matchesInMonth: object[] | null
+    ): object[] => {
+      if (matchesInMonth === null) {
+        throw new Error("Array is empty");
+      }
+      return matchesInMonth.filter((aMatch: any): boolean => {
+        return this.getDateStringFromDate(new Date(aMatch.startDate)) === date;
+      });
+    };
     let options = {
       method: "GET",
       url: this.makeLink(league, date),
@@ -107,33 +113,29 @@ class ESports extends SportsHistoryAbstract {
       },
     };
     try {
-      let data: object[] | null = null;
+      let matchesInToday: object[] | null = null;
       await request(options, (err: any, response: any) => {
-        data = this.todayMatchFor(date, JSON.parse(response.body).content);
+        let matchesInMonth: object[] | null = JSON.parse(response.body).content;
+        matchesInToday = todayMatchFor(date, matchesInMonth);
       });
-      return data || [];
+      return matchesInToday || [];
     } catch (error) {
       throw error;
     }
   }
-  protected todayMatchFor(
-    date: string,
-    matchesInMonth: object[] | null
-  ): object[] {
-    if (matchesInMonth === null) {
-      throw new Error("Array is empty");
-    }
-    return matchesInMonth.filter((aMatch: any): boolean => {
-      return this.isEqualDate(aMatch.startDate, date);
-    });
-  }
-  protected isEqualDate(startDate: number, date: string): boolean {
-    return this.getDateStringFromDate(new Date(startDate)) === date;
-  }
   protected makeLink(league: ESportsLeague, date: string): string {
-    return `https://apis.naver.com/nng_main/esports/v1/schedule/month?month=${this.makeDateToYYYYMM(
+    const makeDateToYYYYMM = (date: string): string => {
+      return date.substring(0, 7);
+    };
+    return `https://apis.naver.com/nng_main/esports/v1/schedule/month?month=${makeDateToYYYYMM(
       this.splitDateByHyphen(date)
     )}&topLeagueId=${league}&relay=false`;
+  }
+
+  protected splitDateByHyphenFor(startDate: number): string {
+    return this.splitDateByHyphen(
+      this.getDateStringFromDate(new Date(startDate))
+    );
   }
   protected splitDateByHyphen(date: string): string {
     return (
@@ -143,9 +145,6 @@ class ESports extends SportsHistoryAbstract {
       "-" +
       date.substring(6, 8)
     );
-  }
-  protected makeDateToYYYYMM(date: string): string {
-    return date.substring(0, 7);
   }
 }
 
