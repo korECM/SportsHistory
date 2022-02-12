@@ -99,16 +99,6 @@ class SportsHistoryAbstract {
         title: data.title || "",
         stadium: data.stadium || "",
       });
-      // Data.push({
-      //   homeTeamName: data.homeTeam.name,
-      //   awayTeamName: data.awayTeam.name,
-      //   homeTeamScore: data.homeScore,
-      //   awayTeamScore: data.awayScore,
-      //   gameDate: data.gameStartDate,
-      //   state: data.matchStatus, // "RESULT" , "BEFORE"
-      //   title: data.title || "",
-      //   stadium: data.stadium || "",
-      // });
     });
     return Data;
   }
