@@ -1,5 +1,6 @@
 import { SportsHistoryAbstract } from "./SportsHistoryAbstract";
 import { ESportsLeague, ESportsLeagueArray } from "../Model";
+import request from "request-promise";
 
 /**
  * E-Sports 정보를 불러오는 클래스
@@ -13,9 +14,35 @@ class ESports extends SportsHistoryAbstract {
    * @description
    * 리그 이름 | 값
    *------------- | -------------
-   * 리그오브레전드  | lol
-   * 스타크래프트2 | starcraft2
-   * 오버워치 | overwatch
+  * LCK |  lck
+  * LCK CL |  lck_cl
+  * BSC |  bsc
+  * PWS |  pws
+  * GSL |  gsl
+  * LCK AS |  lck_as
+  * LPL |  lpl
+  * LEC |  lec
+  * LCS |  lcs
+  * 롤드컵 |  world_championship
+  * MSI |  msi
+  * MSC |  msc
+  * LOL 올스타 |  lol_allstar
+  * 케스파컵 |  kespacup
+  * CK |ck
+  * Rift Rivals |  riftrivals
+  * PCS |  pubg_pcs
+  * PGC |  pgc
+  * PKC |  pkc
+  * PKL |  pkl
+  * BWS |  bws
+  * PMPS |  pmps
+  * VCT 챌린저스 |  vck
+  * VCT |  vct
+  * WCK |  wck
+  * 호라이즌 컵 |  whc
+  * OWL |  owl
+  * OSL |  osl_futures
+
    */
 
   /**
@@ -39,9 +66,85 @@ class ESports extends SportsHistoryAbstract {
       throw error;
     }
   }
+  protected parseData(rawData: any[]) {
+    const matchTimeFor = (startDate: number): string => {
+      return new Date(startDate).toString().substring(16, 21);
+    };
+    const matchStatusFor = (aMatch: any): string => {
+      return aMatch?.matchStatus === "RESULT" // "RESULT" or "BEFORE"
+        ? "종료"
+        : matchTimeFor(aMatch.startDate);
+    };
+    let Data: any[] = [];
+    rawData.map((data: any) => {
+      Data.push({
+        homeTeamName: data.homeTeam?.name ?? "",
+        awayTeamName: data.awayTeam?.name ?? "",
+        homeTeamScore: data.homeScore,
+        awayTeamScore: data.awayScore,
+        gameDate: this.splitDateByHyphenFor(data.startDate),
+        state: matchStatusFor(data),
+        title: data.title || "",
+        stadium: data.stadium || "",
+      });
+    });
+    return Data;
+  }
 
+  protected async callAPI(league: any, date: string) {
+    const todayMatchFor = (
+      date: string,
+      matchesInMonth: object[] | null
+    ): object[] => {
+      if (matchesInMonth === null) {
+        throw new Error("Array is empty");
+      }
+      return matchesInMonth.filter((aMatch: any): boolean => {
+        return this.getDateStringFromDate(new Date(aMatch.startDate)) === date;
+      });
+    };
+    let options = {
+      method: "GET",
+      url: this.makeLink(league, date),
+      headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
+      },
+    };
+    try {
+      let matchesInToday: object[] | null = null;
+      await request(options, (err: any, response: any) => {
+        let matchesInMonth: object[] | null = JSON.parse(response.body).content;
+        matchesInToday = todayMatchFor(date, matchesInMonth);
+      });
+      return matchesInToday || [];
+    } catch (error) {
+      throw error;
+    }
+  }
   protected makeLink(league: ESportsLeague, date: string): string {
-    return `https://sports.news.naver.com/esports/schedule/scoreboard.nhn?year=2020&month=05&category=${league}&date=${date}`;
+    const makeDateToYYYYMM = (date: string): string => {
+      return date.substring(0, 7);
+    };
+    return `https://apis.naver.com/nng_main/esports/v1/schedule/month?month=${makeDateToYYYYMM(
+      this.splitDateByHyphen(date)
+    )}&topLeagueId=${league}&relay=false`;
+  }
+
+  protected splitDateByHyphenFor(startDate: number): string {
+    return this.splitDateByHyphen(
+      this.getDateStringFromDate(new Date(startDate))
+    );
+  }
+  protected splitDateByHyphen(date: string): string {
+    return (
+      date.substring(0, 4) +
+      "-" +
+      date.substring(4, 6) +
+      "-" +
+      date.substring(6, 8)
+    );
   }
 }
 

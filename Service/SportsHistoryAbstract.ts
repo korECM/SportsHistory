@@ -86,6 +86,8 @@ class SportsHistoryAbstract {
 
   protected parseData(rawData: any[]) {
     let Data: any[] = [];
+    // https://sports.news.naver.com/wfootball/schedule/scoreboard.nhn?date=20220209&category=epl
+    // https://apis.naver.com/nng_main/esports/v1/schedule/month?month=2022-02&topLeagueId=lck&relay=false
     rawData.map((data: any) => {
       Data.push({
         homeTeamName: data.homeTeamName,
@@ -134,6 +136,7 @@ class SportsHistoryAbstract {
       await request(options, (err: any, response: any) => {
         data = JSON.parse(response.body).scoreboardList;
       });
+
       return data || [];
     } catch (error) {
       throw error;
