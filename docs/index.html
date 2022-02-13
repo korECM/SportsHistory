@@ -93,16 +93,161 @@
     <section>
         <article><h1>SportsHistory</h1>
 <blockquote>
-<p>해당 날짜의 여러 경기 결과를 불러오는 Node.JS Module</p>
+<p>해당 날짜의 경기 결과를 불러오는 Node.JS Module</p>
 </blockquote>
-<p><a href="https://npmjs.org/package/datadog-metrics"><img src="https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square" alt="NPM Version"></a>
-<a href="https://travis-ci.org/korECM/SportsHistory"><img src="https://travis-ci.org/korECM/SportsHistory.svg?branch=master" alt="Build Status"></a>
-<a href="https://npmjs.org/package/datadog-metrics"><img src="https://img.shields.io/npm/dm/datadog-metrics.svg?style=flat-square" alt="Downloads Stats"></a></p>
-<p>소개</p>
-<p><img src="../header.png" alt=""></p>
+<p><img src="https://img.shields.io/npm/v/sports-history?color=brightgreen&amp;style=flat-square" alt="npm">
+<img src="https://img.shields.io/bundlephobia/min/sports-history?style=flat-square" alt="npm bundle size">
+<img src="https://img.shields.io/travis/korECM/SportsHistory?color=blue&amp;style=flat-square" alt="Travis (.org)">
+<a href="https://github.com/korECM/SportsHistory/stargazers"><img src="https://img.shields.io/github/stars/korECM/SportsHistory?color=yellow&amp;style=flat-square" alt="GitHub stars"></a>
+<a href="http://hits.dwyl.com/korECM/sports-history"><img src="http://hits.dwyl.com/korECM/sports-history.svg" alt="HitCount"></a>
+<a href="https://github.com/korECM/SportsHistory/blob/master/LICENSE"><img src="https://img.shields.io/github/license/korECM/SportsHistory?color=blue&amp;style=flat-square" alt="GitHub license"></a></p>
+<h2>지원하는 종목</h2>
+<ul>
+<li>국내 야구
+<ul>
+<li>KBO 리그</li>
+</ul>
+</li>
+<li>국내 농구
+<ul>
+<li>프로 농구</li>
+<li>여자 프로 농구</li>
+</ul>
+</li>
+<li>국내 축구
+<ul>
+<li>K리그 1</li>
+<li>K리그 2</li>
+<li>국가대표</li>
+<li>AFC 챔피언스 리그</li>
+</ul>
+</li>
+<li>해외 야구
+<ul>
+<li>메이저리그</li>
+<li>일본 프로야구</li>
+</ul>
+</li>
+<li>해외 농구
+<ul>
+<li>NBA</li>
+</ul>
+</li>
+<li>해외 축구
+<ul>
+<li>프리미어리그</li>
+<li>라리가</li>
+<li>분데스</li>
+<li>세리에 A</li>
+<li>리그 1</li>
+<li>챔피언스 리그</li>
+<li>유로파 리그</li>
+<li>FA컵</li>
+<li>EFL컵</li>
+<li>코파델레이</li>
+</ul>
+</li>
+<li>E-Sports
+<ul>
+<li>리그오브레전드</li>
+<li>스타크래프트 2</li>
+<li>오버워치</li>
+</ul>
+</li>
+</ul>
 <h2>설치 방법</h2>
+<pre class="prettyprint source lang-sh"><code>npm install sports-history
+</code></pre>
+<p>or</p>
+<pre class="prettyprint source lang-sh"><code>yarn add sports-history
+</code></pre>
+<h2>사용 방법</h2>
+<h3><code>SportsHistory</code></h3>
+<p><code>SportsHistory</code> 클래스는 다음과 같은 프로퍼티를 가지고 있습니다.</p>
+<ul>
+<li>worldSoccer</li>
+<li>koreaSoccer</li>
+<li>koreaBasketball</li>
+<li>worldBasketball</li>
+<li>koreaBaseball</li>
+<li>worldBaseball</li>
+<li>eSports</li>
+</ul>
+<p>각 프로퍼티는 운동 종목을 의미하며 해당 운동에 대한 <code>getHistory</code> 함수를 호출하면 됩니다.</p>
+<h3><code>getHistory(leagueType, date) → Promise&lt; Information &gt;</code></h3>
+<p><code>leagueType</code>은 경기가 열리는 리그를 선택하는 <code>string</code> 파라미터입니다.</p>
+<p>ex)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">리그 이름</th>
+<th style="text-align:center">leagueType</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">프리미어리그</td>
+<td style="text-align:center">epl</td>
+</tr>
+<tr>
+<td style="text-align:center">라리가</td>
+<td style="text-align:center">primera</td>
+</tr>
+</tbody>
+</table>
+<p>자세한 내용은 <a href="https://korecm.github.io/SportsHistory/">Docs</a>를 참고하세요.</p>
+<p><code>date</code>의 경우 <code>Date</code> 자료형으로 필요한 경기가 열린 날짜를 의미합니다.</p>
+<p>따라서 다음과 같은 형태로 호출하면 됩니다.</p>
+<pre class="prettyprint source lang-javascript"><code>let data = await new SportsHistory().worldSoccer.getHistory(&quot;epl&quot;, new Date(&quot;2020/02/20&quot;));
+</code></pre>
+<h3><code>Information</code></h3>
+<p><code>Information</code>은 경기 데이터를 담고있는 인터페이스입니다.</p>
+<p><code>getHistory</code> 함수를 통해 데이터를 요청하면 값은 <code>Information[]</code>가 <code>Promise</code>에 담긴 형태로 전달됩니다.</p>
+<p><code>Information</code>이 가지고 있는 정보는 다음과 같습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">프로퍼티</th>
+<th style="text-align:center">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">awayTeamName</td>
+<td style="text-align:center">Away 팀 이름</td>
+</tr>
+<tr>
+<td style="text-align:center">awayTeamScore</td>
+<td style="text-align:center">Away 팀 점수</td>
+</tr>
+<tr>
+<td style="text-align:center">homeTeamName</td>
+<td style="text-align:center">Home팀 이름</td>
+</tr>
+<tr>
+<td style="text-align:center">homeTeamScore</td>
+<td style="text-align:center">Home 팀 점수</td>
+</tr>
+<tr>
+<td style="text-align:center">gameDate</td>
+<td style="text-align:center">경기가 치러진 또는 경기가 치러질 날짜</td>
+</tr>
+<tr>
+<td style="text-align:center">state</td>
+<td style="text-align:center">경기의 진행 상태. 종료된 경기면 <code>종료</code> 아니라면 경기 시작 시간 Ex) <code>16:00</code></td>
+</tr>
+<tr>
+<td style="text-align:center">title</td>
+<td style="text-align:center">경기에 이름. 해당 경기에 특별한 이름이 없는 경우 빈 문자열</td>
+</tr>
+<tr>
+<td style="text-align:center">gameDate</td>
+<td style="text-align:center">경기가 치러지는 장소. 데이터가 없는 경우 빈 문자열</td>
+</tr>
+</tbody>
+</table>
 <h2>사용 예제</h2>
-<pre class="prettyprint source lang-javascript"><code>import { SportsHistory } from &quot;sports-history&quot;;
+<pre class="prettyprint source lang-javascript"><code>import SportsHistory from &quot;sports-history&quot;;
 
 let sh = new SportsHistory();
 
@@ -144,13 +289,22 @@ sh.worldBasketball
     stadium: '문학' },]
 */
 </code></pre>
-<p><em>더 많은 예제와 사용법은 <a href="https://korecm.github.io/SportsHistory/">Wiki</a>를 참고하세요.</em></p>
-<h2>개발 환경 설정</h2>
+<p><em>더 많은 예제와 사용법은 <a href="https://korecm.github.io/SportsHistory/">Docs</a>를 참고하세요.</em></p>
 <h2>업데이트 내역</h2>
 <ul>
+<li>0.0.3
+<ul>
+<li>NPM Module Description 추가 및 한글 설명 문구 수정</li>
+</ul>
+</li>
+<li>0.0.2
+<ul>
+<li>테스트 에러나던 버그 수정</li>
+</ul>
+</li>
 <li>0.0.1
 <ul>
-<li>작업 진행 중</li>
+<li>초기 버전 배포</li>
 </ul>
 </li>
 </ul>
@@ -173,7 +327,7 @@ sh.worldBasketball
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Fri Apr 10 2020 00:36:12 GMT+0900 (GMT+09:00)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Fri Apr 10 2020 02:13:29 GMT+0900 (GMT+09:00)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
