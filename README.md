@@ -186,7 +186,8 @@ sh.worldBasketball
 _더 많은 예제와 사용법은 [Docs][wiki]를 참고하세요._
 
 ## 업데이트 내역
-
+* 0.0.3
+  * Naver 이스포츠 API 바뀐 부분 대응, 새로 생긴 종목 추가
 * 0.0.3
   * NPM Module Description 추가 및 한글 설명 문구 수정
 * 0.0.2
